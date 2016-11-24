@@ -4,18 +4,14 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
-import android.animation.ValueAnimator;
 import android.content.Context;
 import android.os.Handler;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
-import android.view.animation.AnimationSet;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-
-import java.util.Collection;
 
 /**
  * Created by Lee_yting on 2016/11/23 0023.
@@ -97,7 +93,7 @@ public class GuideView extends RelativeLayout {
     }
 
     private void start() {
-
+        // 粉色球动画轨迹
         ViewPath redPath = new ViewPath();//偏移坐标
         redPath.moveTo(0, 0);
         redPath.lineTo(mWith / 5 - mWith / 2, 0);
@@ -106,6 +102,32 @@ public class GuideView extends RelativeLayout {
         redPath2.curveTo(-700, -mHeight / 2, mWith / 3 * 2, -mHeight / 3 * 2, 0, -dp80);
         setAnimation(pink, redPath, redPath2);
 
+        // 紫色球动画轨迹
+        ViewPath purplePath = new ViewPath();//偏移坐标
+        purplePath.moveTo(0, 0);
+        purplePath.lineTo(mWith / 5*2 - mWith / 2, 0);
+        ViewPath purplePath2 = new ViewPath();//偏移坐标
+        purplePath2.moveTo(mWith / 5*2 - mWith / 2, 0);
+        purplePath2.curveTo(-300, -mHeight / 2, mWith, -mHeight / 9 * 5, 0, -dp80);
+        setAnimation(purple, purplePath, purplePath2);
+
+        //黄色球动画轨迹
+        ViewPath yellowPath = new ViewPath();//偏移坐标
+        yellowPath.moveTo(0, 0);
+        yellowPath.lineTo(mWith / 5*3 - mWith / 2, 0);
+        ViewPath yellowPath2 = new ViewPath();//偏移坐标
+        yellowPath2.moveTo(mWith / 5*3 - mWith / 2, 0);
+        yellowPath2.curveTo(300, mHeight, -mWith, -mHeight / 9 * 5, 0, -dp80);
+        setAnimation(yellow, yellowPath, yellowPath2);
+
+        //蓝色球动画轨迹
+        ViewPath bluePath = new ViewPath();//偏移坐标
+        bluePath.moveTo(0, 0);
+        bluePath.lineTo(mWith / 5*4 - mWith / 2, 0);
+        ViewPath bluePath2 = new ViewPath();//偏移坐标
+        bluePath2.moveTo(mWith / 5*4 - mWith / 2, 0);
+        bluePath2.curveTo(700, mHeight/3*2, -mWith/2, mHeight /2, 0, -dp80);
+        setAnimation(blue, bluePath, bluePath2);
 
     }
 
@@ -128,9 +150,10 @@ public class GuideView extends RelativeLayout {
 
         AnimatorSet set = new AnimatorSet();
         set.setDuration(1800);
-        set.playTogether(new AnimEndListener(set));
+        set.playTogether(alpha, scaleX, scaleY, anim2);
+        set.addListener(new AnimEndListener(set));
         AnimatorSet set2 = new AnimatorSet();
-        set2.playSequentially(anim1,set);
+        set2.playSequentially(anim1, set);
         set2.start();
 
 
